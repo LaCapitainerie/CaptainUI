@@ -4,8 +4,11 @@
     "row-type/",
     "*.tsx"
   ],
+  "bin": {
+    "captainui": "./cli.js"
+  },
   "name": "@hugoant/captainui",
-  "version": "1.0.0",
+  "version": "1.0.6",
   "description": "ui components built on top of shadcn",
   "main": "index.ts",
   "scripts": {
