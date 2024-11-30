@@ -23,33 +23,69 @@ const downloadFile = (url, dest) => {
 };
 
 const downloadComponent = async () => {
-  const files = [
-    'row-type/data-table-row-badge.tsx',
-    'row-type/data-table-row-boolean.tsx',
-    'index.ts'
-  ];
 
-  const baseUrl = 'https://github.com/LaCapitainerie/CaptainUI/blob/main/data-table/';
-  const destDir = path.resolve(process.cwd(), 'data-table');
+  const files = {
+    "file-dialog": [
+      "file-dialog.tsx",
+    ],
+    "data-table": [
+      "row-type/data-table-row-badge.tsx",
+      "row-type/data-table-row-boolean.tsx",
+      "row-type/data-table-row-currency.tsx",
+      "row-type/data-table-row-date.tsx",
+      "row-type/data-table-row-enum.tsx",
 
-  fs.mkdirSync(destDir, { recursive: true });
-
-  for (const file of files) {
-    const url = `${baseUrl}${file}`;
-    const dest = path.join(destDir, file);
-    const dir = path.dirname(dest);
-
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
-    try {
-      console.log(`Downloading ${file}...`);
-      await downloadFile(url, dest);
-    } catch (err) {
-      console.error(`Failed to download ${file}:`, err);
-    }
+      "data-table-column-header.tsx",
+      "data-table-faceted-filter.tsx",
+      "data-table-form.tsx",
+      "data-table-pagination.tsx",
+      "data-table-row-actions.tsx",
+      "data-table-skeleton.tsx",
+      "data-table-toolbar.tsx",
+      "data-table-view-options.tsx",
+      "data-table.tsx",
+      
+    ],
   }
+
+  const args = process.argv.slice(2);
+  const componentName = args.slice(1);
+  
+  for (const component of componentName) {
+
+    const baseUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/${component}/`;
+
+    if (!files[component]) {
+      console.error(`Component ${component} not found`);
+      return;
+    }
+
+    const destDir = path.resolve(process.cwd(), 'src/components/captainui/' + component);
+
+    if (!fs.existsSync(destDir)) {
+      fs.mkdirSync(destDir, { recursive: true });
+    }
+
+    for (const file of files[component]) {
+      const url = `${baseUrl}${file}`;
+      const dest = path.join(destDir, file);
+      const dir = path.dirname(dest);
+  
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+  
+      try {
+        console.log(`Downloading ${file}...`);
+        await downloadFile(url, dest);
+      } catch (err) {
+        console.error(`Failed to download ${file}:`, err);
+      }
+    }
+    
+  }
+
+  
 };
 
 downloadComponent();
