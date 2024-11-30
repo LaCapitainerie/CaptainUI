@@ -1,0 +1,34 @@
+{
+  "files": [
+    "captainui/index.ts",
+    "row-type/",
+    "*.tsx"
+  ],
+  "name": "@hugoant/captainui",
+  "version": "1.0.0",
+  "description": "ui components built on top of shadcn",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsup index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaCapitainerie/CaptainUI.git"
+  },
+  "keywords": [
+    "components",
+    "shadcn",
+    "captainui"
+  ],
+  "author": "LaCapitainerie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LaCapitainerie/CaptainUI/issues"
+  },
+  "homepage": "https://github.com/LaCapitainerie/CaptainUI#readme",
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
