@@ -27,7 +27,7 @@ import { DataTableSkeleton } from "./data-table-skeleton"
 interface DataTableProps<TData, TValue, TColumns extends ColumnDef<TData, TValue>[]> {
   columns: TColumns
   data: TData[]
-  keyValue: keyValueType<TData>
+  keyValue: keyValueType<NoInfer<TColumns>>
   textFilterColumn: keyof TData & string
   apiUrl: string
   primaryKey: keyof TData & string

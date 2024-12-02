@@ -1,13 +1,10 @@
+import { AuthorizedKey } from "@/types/utils";
 import { Row } from "@tanstack/react-table"
 import { CheckCircle2Icon, CircleXIcon } from "lucide-react"
 
-type BooleanKey<T> = {
-  [K in keyof T]: T[K] extends boolean ? K : never
-}[keyof T]
-
 interface DataTableRowFormatBooleanProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
-  keyValue: BooleanKey<TData> & string
+  keyValue: AuthorizedKey<TData, boolean> & string
 }
 
 export const TrueElementValues = {

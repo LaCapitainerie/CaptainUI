@@ -5,43 +5,28 @@ import { X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+
 import { DataTableViewOptions } from "./data-table-view-options"
+import { BooleanObject, DataTableFacetedFilter, EnumObject } from "./data-table-faceted-filter"
+import { AuthorizedKey } from "@/types/utils"
 
-import { DataTableFacetedFilter } from "./data-table-faceted-filter"
-
-type AuthorizedType = boolean | string
-
-type AuthorizedKey<T> = {
-  [K in keyof T]: T[K] extends AuthorizedType ? K : never
-}[keyof T]
-
-type BooleanObject = {
-  label: string
-  value: boolean
-  icon?: React.ComponentType<{ className?: string }>
-}
-
-type EnumObject = {
-  label: string
-  value: string
-  icon?: React.ComponentType<{ className?: string }>
-}
+type Authorized = boolean | string
 
 export type keyValueType<TData> = {
-  [K in AuthorizedKey<TData>]: (TData[K] extends boolean ? BooleanObject : EnumObject)[]
+  [K in AuthorizedKey<TData, Authorized>]: (TData[K] extends boolean ? BooleanObject : EnumObject)[]
 }
 
-interface DataTableToolbarProps<TData> {
+interface DataTableToolbarProps<TData, TColumns> {
   table: Table<TData>
-  keyValue: keyValueType<TData>
+  keyValue: keyValueType<TColumns>
   filterColumn: keyof TData & string
 }
 
-export function DataTableToolbar<TData>({
+export function DataTableToolbar<TData, TColumns>({
   table,
   keyValue,
   filterColumn
-}: DataTableToolbarProps<TData>) {
+}: DataTableToolbarProps<TData, TColumns>) {
   const isFiltered = table.getState().columnFilters.length > 0
   
   return (
@@ -62,7 +47,7 @@ export function DataTableToolbar<TData>({
                 key={key}
                 column={table.getColumn(key)}
                 title={key.charAt(0).toUpperCase() + key.slice(1)}
-                options={value as any} />
+                options={value as (BooleanObject | EnumObject)[]} />
             )
           })
         }

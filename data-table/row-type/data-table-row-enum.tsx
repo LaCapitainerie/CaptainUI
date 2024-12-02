@@ -1,14 +1,11 @@
+import { AuthorizedKey } from "@/types/utils"
 import { Row } from "@tanstack/react-table"
 import { LucideProps } from "lucide-react"
 import react from "react"
 
-type StringKey<T> = {
-  [K in keyof T]: T[K] extends string ? K : never
-}[keyof T]
-
 interface DataTableRowFormatEnumProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
-  keyValue: StringKey<TData> & string
+  keyValue: AuthorizedKey<TData, string> & string
   enumValue: {
     [key: string]: {
       value: string

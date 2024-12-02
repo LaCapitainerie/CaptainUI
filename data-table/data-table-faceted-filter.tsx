@@ -21,14 +21,24 @@ import {
 } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 
+export type BooleanObject = {
+  label: string
+  value: boolean
+  icon?: React.ComponentType<{ className?: string }>
+}
+
+export type EnumObject= {
+  label: string
+  value: string
+  icon?: React.ComponentType<{ className?: string }>
+}
+
+export type FilterObject = BooleanObject | EnumObject
+
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>
   title?: string
-  options: {
-    value: string
-    label: string
-    icon?: React.ComponentType<{ className?: string }>
-  }[]
+  options: FilterObject[]
 }
 
 export function DataTableFacetedFilter<TData, TValue>({
@@ -37,7 +47,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   options,
 }: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues()
-  const selectedValues = new Set(column?.getFilterValue() as any[])
+  const selectedValues = new Set(column?.getFilterValue() as FilterObject['value'][])
 
   return (
     <Popover>
@@ -68,7 +78,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                     .map((option) => (
                       <Badge
                         variant="secondary"
-                        key={option.value}
+                        key={option.value.toString()}
                         className="rounded-sm px-1 font-normal"
                       >
                         {option.label}
@@ -90,7 +100,7 @@ export function DataTableFacetedFilter<TData, TValue>({
                 const isSelected = selectedValues.has(option.value)
                 return (
                   <CommandItem
-                    key={option.value}
+                    key={option.value.toString()}
                     onSelect={() => {
                       if (isSelected) {
                         selectedValues.delete(option.value)

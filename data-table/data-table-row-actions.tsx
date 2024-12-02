@@ -21,14 +21,11 @@ import {
 
 import { z } from "zod"
 import { CustomResponse } from "@/lib/safe-route"
+import { AuthorizedKey } from "@/types/utils"
 
 type Authorized = z.ZodEnum<any> | z.ZodBoolean
 
-type EnumKeys<T extends z.ZodObject<any>> = {
-  [K in keyof T]: T[K] extends Authorized ? K : never
-}[keyof T];
-
-interface DataTableRowActionsProps<TData, T extends z.ZodObject<any>, K extends EnumKeys<T["shape"]>> {
+interface DataTableRowActionsProps<TData, T extends z.ZodObject<any>, K extends AuthorizedKey<T["shape"], Authorized>> {
   row: Row<TData>
   itemSchema: T
   keyValues: K[]
@@ -71,7 +68,7 @@ async function UpdateItem<TData extends {[x: string]: any;}>(apiUrl: string, ite
 
 }
 
-export function DataTableRowActions<TData, T extends z.ZodObject<any>, K extends EnumKeys<T["shape"]>>({
+export function DataTableRowActions<TData, T extends z.ZodObject<any>, K extends AuthorizedKey<T["shape"], Authorized>>({
   row,
   itemSchema,
   keyValues,

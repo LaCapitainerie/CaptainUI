@@ -1,14 +1,11 @@
 import { Row } from "@tanstack/react-table"
-import { Badge } from "../../../ui/badge"
-
-type StringKey<T> = {
-  [K in keyof T]: T[K] extends string ? K : never
-}[keyof T]
+import { Badge } from "../../badge"
+import { AuthorizedKey } from "@/types/utils"
 
 interface DataTableRowFormatBadgeProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
-  keyValue: StringKey<TData> & string
-  keyBadge: StringKey<TData> & string
+  keyValue: AuthorizedKey<TData, string> & string
+  keyBadge: AuthorizedKey<TData, string> & string
 }
 
 export function DataTableRowFormatBadge<TData>({

@@ -1,14 +1,11 @@
+import { AuthorizedKey } from "@/types/utils"
 import { Row } from "@tanstack/react-table"
 import { format } from "date-fns"
 import { Clock } from "lucide-react"
 
-type DateKey<T> = {
-  [K in keyof T]: T[K] extends string | Date ? K : never
-}[keyof T]
-
 interface DataTableRowFormatDateProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
-  keyValue: DateKey<TData> & string
+  keyValue: AuthorizedKey<TData, string | Date> & string
 }
 
 export function DataTableRowFormatDate<TData>({

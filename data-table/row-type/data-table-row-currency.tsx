@@ -1,12 +1,9 @@
+import { AuthorizedKey } from "@/types/utils"
 import { Row } from "@tanstack/react-table"
-
-type CurrencyKey<T> = {
-  [K in keyof T]: T[K] extends number ? K : never
-}[keyof T]
 
 interface DataTableRowFormatCurrencyProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
-  keyValue: CurrencyKey<TData> & string
+  keyValue: AuthorizedKey<TData, number> & string
 }
 
 export function DataTableRowFormatCurrency<TData>({
