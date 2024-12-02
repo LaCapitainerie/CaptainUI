@@ -27,7 +27,7 @@ const downloadComponent = async () => {
   const files = {
     "file-dialog": {
       'src/components/captainui/file-dialog': [
-        "file-dialog.tsx",
+        "file-dialog/file-dialog.tsx",
       ],
     },
     "data-table": {
