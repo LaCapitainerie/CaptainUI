@@ -26,12 +26,12 @@ const downloadComponent = async () => {
 
   const files = {
     "file-dialog": {
-      'src/components/captainui/file-dialog': [
+      'src/components/captainui/': [
         "file-dialog/file-dialog.tsx",
       ],
     },
     "data-table": {
-      'src/components/captainui/data-table': [
+      'src/components/captainui/': [
         "data-table/row-type/data-table-row-badge.tsx",
         "data-table/row-type/data-table-row-boolean.tsx",
         "data-table/row-type/data-table-row-currency.tsx",
@@ -104,8 +104,8 @@ function spinner() {
   let current = 0;
 
   const loader = [
-    `\r⚓ Shipping components 📦  `,
-    `\r⚓ Shipping components 📦📦 `,
+    `\r⚓ Shipping components 📦    `,
+    `\r⚓ Shipping components 📦📦  `,
     `\r⚓ Shipping components 📦📦📦`,
   ]
 
