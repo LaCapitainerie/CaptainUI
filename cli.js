@@ -9,7 +9,7 @@ const downloadFile = (url, dest) => {
     const file = fs.createWriteStream(dest);
     https.get(url, (response) => {
       if (response.statusCode !== 200) {
-        reject(`Failed to fetch ${url}`);
+        reject(response.statusCode);
         return;
       }
       response.pipe(file);
@@ -17,7 +17,7 @@ const downloadFile = (url, dest) => {
         file.close(resolve);
       });
     }).on('error', (err) => {
-      fs.unlink(dest, () => reject(err.message));
+      fs.unlink(dest, () => reject(`${err.message}`));
     });
   });
 };
@@ -89,7 +89,7 @@ const downloadComponent = async () => {
           try {
             await downloadFile(url, dest);
           } catch (error) {
-            console.error(error);
+            console.error(`\r❌ Error on shipping component at ${url}, reason : ${error}\n`);
           }
         }
       }
@@ -103,8 +103,14 @@ const downloadComponent = async () => {
 function spinner() {
   let current = 0;
 
+  const loader = [
+    `\r⚓ Shipping components 📦`,
+    `\r⚓ Shipping components 📦📦`,
+    `\r⚓ Shipping components 📦📦📦`,
+  ]
+
   const interval = setInterval(() => {
-      process.stdout.write(`\r⚓ Shipping components ${'📦' * (1 + current % 3)} `);
+      process.stdout.write(loader[current % loader.length]);
       current++;
   }, 500);
 
