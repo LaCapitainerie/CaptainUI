@@ -25,9 +25,11 @@ const downloadFile = (url, dest) => {
 const downloadComponent = async () => {
 
   const files = {
-    "file-dialog": [
-      "file-dialog.tsx",
-    ],
+    "file-dialog": {
+      'src/components/captainui/file-dialog': [
+        "file-dialog.tsx",
+      ],
+    },
     "data-table": {
       'src/components/captainui/data-table': [
         "row-type/data-table-row-badge.tsx",
@@ -35,6 +37,7 @@ const downloadComponent = async () => {
         "row-type/data-table-row-currency.tsx",
         "row-type/data-table-row-date.tsx",
         "row-type/data-table-row-enum.tsx",
+        "row-type/data-table-row-image.tsx",
 
         "data-table-column-header.tsx",
         "data-table-faceted-filter.tsx",
@@ -45,10 +48,9 @@ const downloadComponent = async () => {
         "data-table-toolbar.tsx",
         "data-table-view-options.tsx",
         "data-table.tsx",
-
       ],
 
-      'utils/': [
+      "src/components/captainui/utils": [
         "utils.ts",
       ],
     }
@@ -60,7 +62,7 @@ const downloadComponent = async () => {
 
   for (const component of componentName) {
 
-    const baseUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/${component}/`;
+    const baseUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/components/${component}/`;
 
     if (!files[component]) {
       console.error(`Component ${component} not found`);
@@ -85,18 +87,36 @@ const downloadComponent = async () => {
           }
 
           try {
-            console.log(`Downloading ${file}...`);
             await downloadFile(url, dest);
-          } catch (err) {
-            console.error(`Failed to download ${file}:`, err);
+          } catch (error) {
+            console.error(error);
           }
         }
       }
     }
-
   }
 
+  return '⚓ Components downloaded successfully ⚔️';
 
 };
 
-downloadComponent();
+function spinner() {
+  let current = 0;
+
+  const interval = setInterval(() => {
+      process.stdout.write(`\r⚓ Shipping components ${'📦' * (1 + current % 3)} `);
+      current++;
+  }, 500);
+
+  return interval;
+}
+
+(async function run() {
+  const spinnerInterval = spinner();
+
+  const result = await downloadComponent();
+  clearInterval(spinnerInterval);
+
+  process.stdout.write('\r');
+  console.log(result);
+})();

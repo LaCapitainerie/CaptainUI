@@ -1,4 +1,4 @@
-import { AuthorizedKey } from "@/types/utils";
+import { AuthorizedKey } from "../../utils"
 import { Row } from "@tanstack/react-table"
 import Image from 'next/image';
 

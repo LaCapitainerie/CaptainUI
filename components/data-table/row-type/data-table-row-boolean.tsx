@@ -1,4 +1,4 @@
-import { AuthorizedKey } from "@/types/utils";
+import { AuthorizedKey } from "../../utils";
 import { Row } from "@tanstack/react-table"
 import { CheckCircle2Icon, CircleXIcon } from "lucide-react"
 

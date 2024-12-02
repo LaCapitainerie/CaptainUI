@@ -1,6 +1,6 @@
 import { Row } from "@tanstack/react-table"
-import { Badge } from "../../badge"
-import { AuthorizedKey } from "@/types/utils"
+import { Badge } from "@/components/ui/badge"
+import { AuthorizedKey } from "../../utils"
 
 interface DataTableRowFormatBadgeProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>

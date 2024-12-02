@@ -20,8 +20,21 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { z } from "zod"
-import { CustomResponse } from "@/lib/safe-route"
-import { AuthorizedKey } from "@/types/utils"
+import { AuthorizedKey } from "../utils"
+
+type CustomResponse<T> =
+  | ResponseError
+  | ResponseSuccess<T>
+
+type ResponseError = {
+  success: false
+  error: string
+}
+
+type ResponseSuccess<T> = {
+  success: true
+  data: T
+}
 
 type Authorized = z.ZodEnum<any> | z.ZodBoolean
 

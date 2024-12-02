@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 
 import { DataTableViewOptions } from "./data-table-view-options"
 import { BooleanObject, DataTableFacetedFilter, EnumObject } from "./data-table-faceted-filter"
-import { AuthorizedKey } from "@/types/utils"
+import { AuthorizedKey } from "../utils"
 
 type Authorized = boolean | string
 
