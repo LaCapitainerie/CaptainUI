@@ -29,7 +29,7 @@ const downloadComponent = async () => {
       "file-dialog.tsx",
     ],
     "data-table": {
-      'src/components/captainui/': [
+      'src/components/captainui/data-table': [
         "row-type/data-table-row-badge.tsx",
         "row-type/data-table-row-boolean.tsx",
         "row-type/data-table-row-currency.tsx",
@@ -69,7 +69,7 @@ const downloadComponent = async () => {
 
     for (const [destDirValue, listFiles] of Object.entries(files[component])) {
       if (typeof destDirValue[1] === 'string') {
-        const destDir = path.resolve(process.cwd(), destDirValue + component);
+        const destDir = path.resolve(process.cwd(), destDirValue);
 
         if (!fs.existsSync(destDir)) {
           fs.mkdirSync(destDir, { recursive: true });
