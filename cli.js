@@ -32,25 +32,25 @@ const downloadComponent = async () => {
     },
     "data-table": {
       'src/components/captainui/data-table': [
-        "row-type/data-table-row-badge.tsx",
-        "row-type/data-table-row-boolean.tsx",
-        "row-type/data-table-row-currency.tsx",
-        "row-type/data-table-row-date.tsx",
-        "row-type/data-table-row-enum.tsx",
-        "row-type/data-table-row-image.tsx",
+        "data-table/row-type/data-table-row-badge.tsx",
+        "data-table/row-type/data-table-row-boolean.tsx",
+        "data-table/row-type/data-table-row-currency.tsx",
+        "data-table/row-type/data-table-row-date.tsx",
+        "data-table/row-type/data-table-row-enum.tsx",
+        "data-table/row-type/data-table-row-image.tsx",
 
-        "data-table-column-header.tsx",
-        "data-table-faceted-filter.tsx",
-        "data-table-form.tsx",
-        "data-table-pagination.tsx",
-        "data-table-row-actions.tsx",
-        "data-table-skeleton.tsx",
-        "data-table-toolbar.tsx",
-        "data-table-view-options.tsx",
-        "data-table.tsx",
+        "data-table/data-table-column-header.tsx",
+        "data-table/data-table-faceted-filter.tsx",
+        "data-table/data-table-form.tsx",
+        "data-table/data-table-pagination.tsx",
+        "data-table/data-table-row-actions.tsx",
+        "data-table/data-table-skeleton.tsx",
+        "data-table/data-table-toolbar.tsx",
+        "data-table/data-table-view-options.tsx",
+        "data-table/data-table.tsx",
       ],
 
-      "src/components/captainui/utils": [
+      "src/components/captainui/": [
         "utils.ts",
       ],
     }
@@ -62,7 +62,7 @@ const downloadComponent = async () => {
 
   for (const component of componentName) {
 
-    const baseUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/components/${component}/`;
+    const baseUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/components/`;
 
     if (!files[component]) {
       console.error(`Component ${component} not found`);
