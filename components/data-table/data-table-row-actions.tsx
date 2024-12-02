@@ -1,7 +1,9 @@
 "use client"
 
-import { Row } from "@tanstack/react-table"
+import { z } from "zod"
 import { MoreHorizontal } from "lucide-react"
+import { Row } from "@tanstack/react-table"
+
 import { toast } from "@/hooks/use-toast"
 
 import { Button } from "@/components/ui/button"
@@ -19,8 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { z } from "zod"
-import { AuthorizedKey } from "../utils"
+import { AuthorizedKey } from "@/components/captainui/utils"
 
 type CustomResponse<T> =
   | ResponseError

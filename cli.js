@@ -104,8 +104,8 @@ function spinner() {
   let current = 0;
 
   const loader = [
-    `\r⚓ Shipping components 📦`,
-    `\r⚓ Shipping components 📦📦`,
+    `\r⚓ Shipping components 📦  `,
+    `\r⚓ Shipping components 📦📦 `,
     `\r⚓ Shipping components 📦📦📦`,
   ]
 

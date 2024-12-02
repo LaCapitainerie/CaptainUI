@@ -1,7 +1,8 @@
-import { AuthorizedKey } from "../../utils"
-import { Row } from "@tanstack/react-table"
-import { LucideProps } from "lucide-react"
 import react from "react"
+import { LucideProps } from "lucide-react"
+import { Row } from "@tanstack/react-table"
+
+import { AuthorizedKey } from "@/components/captainui/utils"
 
 interface DataTableRowFormatEnumProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
@@ -18,7 +19,6 @@ export function DataTableRowFormatEnum<TData>({
   row,
   keyValue,
   enumValue,
-  className,
 }: DataTableRowFormatEnumProps<TData>) {
   
   const Value = enumValue[row.original[keyValue] as keyof typeof enumValue]

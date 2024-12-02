@@ -1,14 +1,15 @@
 "use client"
 
-import { Table } from "@tanstack/react-table"
 import { X } from "lucide-react"
+import { Table } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+import { AuthorizedKey } from "@/components/captainui/utils"
+
 import { DataTableViewOptions } from "./data-table-view-options"
 import { BooleanObject, DataTableFacetedFilter, EnumObject } from "./data-table-faceted-filter"
-import { AuthorizedKey } from "../utils"
 
 type Authorized = boolean | string
 

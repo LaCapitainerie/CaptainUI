@@ -1,7 +1,8 @@
-import { AuthorizedKey } from "../../utils"
-import { Row } from "@tanstack/react-table"
 import { format } from "date-fns"
 import { Clock } from "lucide-react"
+import { Row } from "@tanstack/react-table"
+
+import { AuthorizedKey } from "@/components/captainui/utils"
 
 interface DataTableRowFormatDateProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
@@ -11,7 +12,6 @@ interface DataTableRowFormatDateProps<TData> extends React.HTMLAttributes<HTMLDi
 export function DataTableRowFormatDate<TData>({
   row,
   keyValue,
-  className,
 }: DataTableRowFormatDateProps<TData>) {
   const Value = row.getValue<Date>(keyValue)
 

@@ -1,6 +1,7 @@
-import { AuthorizedKey } from "../../utils"
-import { Row } from "@tanstack/react-table"
 import Image from 'next/image';
+import { Row } from "@tanstack/react-table"
+
+import { AuthorizedKey } from "@/components/captainui/utils"
 
 interface DataTableRowFormatImageProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
@@ -10,7 +11,6 @@ interface DataTableRowFormatImageProps<TData> extends React.HTMLAttributes<HTMLD
 export function DataTableRowFormatImage<TData>({
   row,
   keyValue,
-  className,
 }: DataTableRowFormatImageProps<TData>) {
 
   const Value = row.getValue<string>(keyValue)

@@ -1,6 +1,7 @@
-import { AuthorizedKey } from "../../utils";
-import { Row } from "@tanstack/react-table"
 import { CheckCircle2Icon, CircleXIcon } from "lucide-react"
+import { Row } from "@tanstack/react-table"
+
+import { AuthorizedKey } from "@/components/captainui/utils"
 
 interface DataTableRowFormatBooleanProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
@@ -24,7 +25,6 @@ export const FalseElementValues = {
 export function DataTableRowFormatBoolean<TData>({
   row,
   keyValue,
-  className,
 }: DataTableRowFormatBooleanProps<TData>) {
 
   const Value = row.getValue<boolean>(keyValue) ? TrueElementValues : FalseElementValues

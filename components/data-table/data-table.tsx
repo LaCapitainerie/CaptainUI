@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -15,14 +16,13 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table"
+import { useRouter } from "next/navigation"
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table"
 
 import { DataTablePagination } from "./data-table-pagination"
-import { DataTableToolbar, keyValueType } from "./data-table-toolbar"
-import { useRouter } from "next/navigation"
-import { Suspense } from "react"
 import { DataTableSkeleton } from "./data-table-skeleton"
+import { DataTableToolbar, keyValueType } from "./data-table-toolbar"
 
 interface DataTableProps<TData, TValue, TColumns extends ColumnDef<TData, TValue>[]> {
   columns: TColumns
@@ -91,7 +91,7 @@ export function DataTable<TData, TValue, TColumns extends ColumnDef<TData, TValu
 
   return (
 
-    <Suspense
+    <React.Suspense
       fallback={
         <DataTableSkeleton
           columnCount={columns.length}
@@ -157,7 +157,7 @@ export function DataTable<TData, TValue, TColumns extends ColumnDef<TData, TValu
         </div>
         <DataTablePagination table={table} />
       </div>
-    </Suspense>
+    </React.Suspense>
 
 
   )

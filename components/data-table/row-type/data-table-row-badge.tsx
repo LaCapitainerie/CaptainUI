@@ -1,6 +1,8 @@
 import { Row } from "@tanstack/react-table"
+
 import { Badge } from "@/components/ui/badge"
-import { AuthorizedKey } from "../../utils"
+
+import { AuthorizedKey } from "@/components/captainui/utils"
 
 interface DataTableRowFormatBadgeProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   row: Row<TData>
@@ -12,7 +14,6 @@ export function DataTableRowFormatBadge<TData>({
   row,
   keyValue,
   keyBadge,
-  className,
 }: DataTableRowFormatBadgeProps<TData>) {
   
   const Value = row.original[keyValue] as string

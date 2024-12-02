@@ -1,11 +1,10 @@
-import { ColumnDef, Row } from "@tanstack/react-table";
 import { z } from "zod";
+import { Row } from "@tanstack/react-table";
 
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
