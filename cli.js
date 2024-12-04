@@ -61,20 +61,19 @@ const downloadComponent = async () => {
         "stripe/stripe/pay-button.tsx",
       ],
 
-      'src/app/payment': [
+      'src/app/payment/': [
         'stripe/payment/page.tsx',
       ],
 
-      'src/app/payment/_components': [
+      'src/app/payment/_components/': [
         'stripe/payment/_components/failed.tsx',
         'stripe/payment/_components/success.tsx',
       ],
 
-      'src/app/payment/process': [
+      'src/app/payment/process/': [
         'stripe/payment/process/page.tsx'
       ],
     }
-
   }
 
   const args = process.argv.slice(2);
@@ -91,7 +90,7 @@ const downloadComponent = async () => {
 
     for (const [destDirValue, listFiles] of Object.entries(files[component])) {
       if (typeof destDirValue[1] === 'string') {
-        const destDir = path.resolve(process.cwd(), destDirValue);
+        const destDir = path.resolve(process.cwd());
 
         if (!fs.existsSync(destDir)) {
           fs.mkdirSync(destDir, { recursive: true });
