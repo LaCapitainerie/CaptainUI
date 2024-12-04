@@ -5,34 +5,6 @@ const path = require('path');
 const https = require('https');
 const { createHmac } = require('crypto')
 
-const secret = "49B191CF813FA62A2A280CA07B6812DF23BE3F3C2437604E7FCD2DEE72F1F527";
-
-const getArgs = () =>
-  process.argv.reduce((args, arg) => {
-    // long arg
-    if (arg.slice(0, 2) === "--") {
-      const longArg = arg.split("=");
-      const longArgFlag = longArg[0].slice(2);
-      const longArgValue = longArg.length > 1 ? longArg[1] : true;
-      args[longArgFlag] = longArgValue;
-    }
-    // flags
-    else if (arg[0] === "-") {
-      const flags = arg.slice(1).split("");
-      flags.forEach((flag) => {
-        args[flag] = true;
-      });
-    }
-    return args;
-  }, {});
-
-const args = getArgs();
-
-if (args['secret'] && createHmac('sha256', args['secret'] || '').digest('hex') !== secret) {
-  console.error('❌ Unauthorized access');
-  return;
-}
-
 const downloadFile = (url, dest) => {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(dest);
@@ -55,6 +27,31 @@ const downloadFile = (url, dest) => {
 };
 
 const downloadComponent = async () => {
+
+  const secret = "49B191CF813FA62A2A280CA07B6812DF23BE3F3C2437604E7FCD2DEE72F1F527";
+
+  const getArgs = () =>
+    process.argv.reduce((args, arg) => {
+      // long arg
+      if (arg.slice(0, 2) === "--") {
+        const longArg = arg.split("=");
+        const longArgFlag = longArg[0].slice(2);
+        const longArgValue = longArg.length > 1 ? longArg[1] : true;
+        args[longArgFlag] = longArgValue;
+      }
+      // flags
+      else if (arg[0] === "-") {
+        const flags = arg.slice(1).split("");
+        flags.forEach((flag) => {
+          args[flag] = true;
+        });
+      }
+      return args;
+    }, {});
+
+  const flags = getArgs();
+  const secretFlag = createHmac('sha256', flags['secret'] || '').digest('hex');
+  if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
   const files = {
     "file-dialog": {
@@ -102,8 +99,9 @@ const downloadComponent = async () => {
     }
   }
 
-  const args = process.argv.slice(2);
-  const Components = args.slice(1);
+  // npx @hugoant/captainui add data-table --secure=...
+
+  const Components = process.argv.slice(3, -1);
 
   for (const componentName of Components) {
 
