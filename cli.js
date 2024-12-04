@@ -17,7 +17,10 @@ const downloadFile = (url, dest) => {
         file.close(resolve);
       });
     }).on('error', (err) => {
-      fs.unlink(dest, () => reject(`${err.message}`));
+      fs.unlink(dest, () => {
+        reject(`${err.message}`);
+        return;
+      });
     });
   });
 };
@@ -57,47 +60,41 @@ const downloadComponent = async () => {
 
     "stripe": {
       'src/components/captainui/': [
-        "stripe/stripe/checkout-session.tsx",
-        "stripe/stripe/pay-button.tsx",
+        "stripe/checkout-session.tsx",
+        "stripe/pay-button.tsx",
       ],
 
-      'src/app/payment/': [
-        'stripe/payment/page.tsx',
-      ],
-
-      'src/app/payment/_components/': [
-        'stripe/payment/_components/failed.tsx',
-        'stripe/payment/_components/success.tsx',
-      ],
-
-      'src/app/payment/process/': [
-        'stripe/payment/process/page.tsx'
+      'src/app/': [
+        'payment/page.tsx',
+        'payment/_components/failed.tsx',
+        'payment/_components/success.tsx',
+        'payment/process/page.tsx'
       ],
     }
   }
 
   const args = process.argv.slice(2);
-  const componentName = args.slice(1);
+  const Components = args.slice(1);
 
-  for (const component of componentName) {
+  for (const componentName of Components) {
 
-    const baseUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/components/`;
+    const GithubUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/components`;
 
-    if (!files[component]) {
-      console.error(`Component ${component} not found`);
+    if (!files[componentName]) {
+      console.error(`Component ${componentName} not found`);
       return;
     }
 
-    for (const [ClientFolderInstallation, listFiles] of Object.entries(files[component])) {
+    for (const [ClientFolderInstallation, listFiles] of Object.entries(files[componentName])) {
       if (typeof ClientFolderInstallation[1] === 'string') {
         const PwdClientFolderInstallation = path.resolve(process.cwd(), ClientFolderInstallation);
 
-        if (!fs.existsSync(destDir)) {
-          fs.mkdirSync(destDir, { recursive: true });
+        if (!fs.existsSync(PwdClientFolderInstallation)) {
+          fs.mkdirSync(PwdClientFolderInstallation, { recursive: true });
         }
 
         for (const RepoFileURL of listFiles) {
-          const url = `${baseUrl}${RepoFileURL}`;
+          const fetchUrl = `${GithubUrl}/${componentName}/${RepoFileURL}`;
           const ClientFinalDestination = path.join(PwdClientFolderInstallation, RepoFileURL);
           const dir = path.dirname(ClientFinalDestination);
 
@@ -105,18 +102,20 @@ const downloadComponent = async () => {
             fs.mkdirSync(dir, { recursive: true });
           }
 
-          console.log({
-            "ClientFinalDestination": ClientFinalDestination, 
-            "ClientFolderInstallation": PwdClientFolderInstallation, 
-            "RepoFileURL": RepoFileURL, 
-            "Pwd": process.cwd(), 
-            "ClientFolderInstallation": ClientFolderInstallation
-          });
+          // console.log({
+          //   "ClientFinalDestination": ClientFinalDestination, 
+          //   "Pwd": process.cwd(),
+          //   "ClientFolderInstallation": ClientFolderInstallation,
+          //   "RepoFileURL": RepoFileURL,
+
+          //   "ComponentName": componentName,
+          //   "PwdClientFolderInstallation": PwdClientFolderInstallation,
+          // });
 
           try {
-            await downloadFile(url, ClientFinalDestination);
+            await downloadFile(fetchUrl, ClientFinalDestination);
           } catch (error) {
-            console.error(`\r❌ Error on shipping component at ${url}, reason : ${error}\n`);
+            console.error(`\r❌ Error on shipping component at ${fetchUrl}, reason : ${error}\n`);
           }
         }
       }
@@ -152,4 +151,6 @@ function spinner() {
 
   process.stdout.write('\r');
   console.log(result);
+
+  return;
 })();
