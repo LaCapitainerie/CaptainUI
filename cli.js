@@ -88,25 +88,33 @@ const downloadComponent = async () => {
       return;
     }
 
-    for (const [destDirValue, listFiles] of Object.entries(files[component])) {
-      if (typeof destDirValue[1] === 'string') {
-        const destDir = path.resolve(process.cwd());
+    for (const [ClientFolderInstallation, listFiles] of Object.entries(files[component])) {
+      if (typeof ClientFolderInstallation[1] === 'string') {
+        const PwdClientFolderInstallation = path.resolve(process.cwd(), ClientFolderInstallation);
 
         if (!fs.existsSync(destDir)) {
           fs.mkdirSync(destDir, { recursive: true });
         }
 
-        for (const file of listFiles) {
-          const url = `${baseUrl}${file}`;
-          const dest = path.join(destDir, file);
-          const dir = path.dirname(dest);
+        for (const RepoFileURL of listFiles) {
+          const url = `${baseUrl}${RepoFileURL}`;
+          const ClientFinalDestination = path.join(PwdClientFolderInstallation, RepoFileURL);
+          const dir = path.dirname(ClientFinalDestination);
 
           if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
           }
 
+          console.log({
+            "ClientFinalDestination": ClientFinalDestination, 
+            "ClientFolderInstallation": PwdClientFolderInstallation, 
+            "RepoFileURL": RepoFileURL, 
+            "Pwd": process.cwd(), 
+            "ClientFolderInstallation": ClientFolderInstallation
+          });
+
           try {
-            await downloadFile(url, dest);
+            await downloadFile(url, ClientFinalDestination);
           } catch (error) {
             console.error(`\r❌ Error on shipping component at ${url}, reason : ${error}\n`);
           }
@@ -129,8 +137,8 @@ function spinner() {
   ]
 
   const interval = setInterval(() => {
-      process.stdout.write(loader[current % loader.length]);
-      current++;
+    process.stdout.write(loader[current % loader.length]);
+    current++;
   }, 500);
 
   return interval;
