@@ -53,6 +53,26 @@ const downloadComponent = async () => {
       "src/components/captainui/": [
         "utils.ts",
       ],
+    },
+
+    "stripe": {
+      'src/components/captainui/': [
+        "stripe/stripe/checkout-session.tsx",
+        "stripe/stripe/pay-button.tsx",
+      ],
+
+      'src/app/payment': [
+        'stripe/page.tsx',
+      ],
+
+      'src/app/payment/_components': [
+        'stripe/payment/_components/failed.tsx',
+        'stripe/payment/_components/success.tsx',
+      ],
+
+      'src/app/payment/process': [
+        'stripe/payment/process/page.tsx'
+      ],
     }
 
   }
