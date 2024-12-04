@@ -62,7 +62,7 @@ const downloadComponent = async () => {
       ],
 
       'src/app/payment': [
-        'stripe/page.tsx',
+        'stripe/payment/page.tsx',
       ],
 
       'src/app/payment/_components': [
