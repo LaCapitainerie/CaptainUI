@@ -123,9 +123,9 @@ function spinner() {
   let current = 0;
 
   const loader = [
-    `\r⚓ Shipping components 📦    `,
-    `\r⚓ Shipping components 📦📦  `,
-    `\r⚓ Shipping components 📦📦📦`,
+    `\r\x1b[K⚓ Shipping components 📦    `,
+    `\r\x1b[K⚓ Shipping components 📦📦  `,
+    `\r\x1b[K⚓ Shipping components 📦📦📦`,
   ]
 
   const interval = setInterval(() => {
