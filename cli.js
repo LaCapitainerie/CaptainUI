@@ -53,51 +53,7 @@ const downloadComponent = async () => {
   const secretFlag = createHmac('sha256', flags['secret'] || '').digest('hex');
   if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
-  const files = {
-    "file-dialog": {
-      'src/components/captainui/': [
-        "file-dialog/file-dialog.tsx",
-      ],
-    },
-    "data-table": {
-      'src/components/captainui/': [
-        "data-table/row-type/data-table-row-badge.tsx",
-        "data-table/row-type/data-table-row-boolean.tsx",
-        "data-table/row-type/data-table-row-currency.tsx",
-        "data-table/row-type/data-table-row-date.tsx",
-        "data-table/row-type/data-table-row-enum.tsx",
-        "data-table/row-type/data-table-row-image.tsx",
-
-        "data-table/data-table-column-header.tsx",
-        "data-table/data-table-faceted-filter.tsx",
-        "data-table/data-table-form.tsx",
-        "data-table/data-table-pagination.tsx",
-        "data-table/data-table-row-actions.tsx",
-        "data-table/data-table-skeleton.tsx",
-        "data-table/data-table-toolbar.tsx",
-        "data-table/data-table-view-options.tsx",
-        "data-table/data-table.tsx",
-      ],
-
-      "src/components/captainui/": [
-        "utils.ts",
-      ],
-    },
-
-    "stripe": {
-      'src/components/captainui/': [
-        "stripe/checkout-session.tsx",
-        "stripe/pay-button.tsx",
-      ],
-
-      'src/app/': [
-        'payment/page.tsx',
-        'payment/_components/failed.tsx',
-        'payment/_components/success.tsx',
-        'payment/process/page.tsx'
-      ],
-    }
-  }
+  const files = require('./path.json')
 
   // npx @hugoant/captainui add data-table --secure=...
 
@@ -121,6 +77,14 @@ const downloadComponent = async () => {
         }
 
         for (const RepoFileURL of listFiles) {
+
+          if(RepoFileURL.startwith("cli")){
+            // execute cli command
+
+            continue
+          }
+
+
           const fetchUrl = `${GithubUrl}/${componentName}/${RepoFileURL}`;
           const ClientFinalDestination = path.join(PwdClientFolderInstallation, RepoFileURL);
           const dir = path.dirname(ClientFinalDestination);
