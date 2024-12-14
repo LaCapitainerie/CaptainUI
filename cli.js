@@ -28,7 +28,7 @@ const downloadFile = (url, dest) => {
 
 const downloadComponent = async () => {
 
-  const secret = "49B191CF813FA62A2A280CA07B6812DF23BE3F3C2437604E7FCD2DEE72F1F527";
+  const secret = "b613679a0814d9ec772f95d778c35fc5ff1697c493715653c6c712144292c5ad";
 
   const getArgs = () =>
     process.argv.reduce((args, arg) => {
@@ -51,6 +51,8 @@ const downloadComponent = async () => {
 
   const flags = getArgs();
   const secretFlag = createHmac('sha256', flags['secret'] || '').digest('hex');
+  console.log({ secretFlag, secret });
+  
   if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
   const files = require('./path.json')
