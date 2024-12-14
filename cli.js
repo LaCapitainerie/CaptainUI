@@ -49,13 +49,13 @@ const downloadComponent = async () => {
       return args;
     }, {});
 
-  const flags = getArgs();
-  const secretFlag = createHmac('sha256', flags['secret'] || '').digest('hex');
-  console.log({ secretFlag, secret });
+  // const flags = getArgs();
+  // const secretFlag = createHmac('sha256', flags['secret'] || '').digest('hex');
+  // console.log({ secretFlag, secret });
   
-  if (secretFlag !== secret)return '⚔️ Unauthorized access';
+  // if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
-  const files = require('./path.json')
+  const files = await fetch('https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/path.json').then(res => res.json());
 
   // npx @hugoant/captainui add data-table --secure=...
 
