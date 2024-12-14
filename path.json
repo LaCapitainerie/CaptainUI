@@ -1,14 +1,21 @@
 {
     "file-dialog": {
-
-        "src/components/captainui/": [
-            "file-dialog/file-dialog.tsx"
-        ]
-
+        "npm": [
+            "zod",
+            "@tanstack/react-table"
+        ],
+        "shadcn": [
+            "dialog",
+            "carousel",
+            "card"
+        ],
+        "files": {
+            "src/components/captainui/": [
+                "file-dialog/file-dialog.tsx"
+            ]
+        }
     },
-
     "data-table": {
-
         "src/components/captainui/": [
             "data-table/content/data-table-column-header.tsx",
             "data-table/content/data-table-faceted-filter.tsx",
@@ -21,11 +28,8 @@
             "data-table/content/data-table.tsx",
             "utils.ts"
         ]
-
     },
-
     "data-table-rows": {
-
         "src/components/captainui/": [
             "data-table/row-type/data-table-row-badge.tsx",
             "data-table/row-type/data-table-row-boolean.tsx",
@@ -34,16 +38,12 @@
             "data-table/row-type/data-table-row-enum.tsx",
             "data-table/row-type/data-table-row-image.tsx"
         ]
-
     },
-
     "stripe": {
-
         "src/components/captainui/": [
             "stripe/checkout-session.tsx",
             "stripe/pay-button.tsx"
         ],
-
         "src/app/": [
             "payment/page.tsx",
             "payment/_components/failed.tsx",
@@ -51,8 +51,5 @@
             "payment/process/page.tsx"
         ]
     },
-
-    "auth": {
-
-    }
+    "auth": {}
 }

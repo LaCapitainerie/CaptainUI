@@ -68,7 +68,40 @@ const downloadComponent = async () => {
       return;
     }
 
-    for (const [ClientFolderInstallation, listFiles] of Object.entries(files[componentName])) {
+    // Dependencies installation
+    // npm i ...
+    for (const dept in files[componentName]["npm"]) {
+      console.log(`\r📦 Installing ${dept} dependency for ${componentName}`);
+      
+      const { exec } = require('child_process');
+
+      exec(`npm i ${dept}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`\r❌ Error on installing ${dept} dependency for ${componentName}, reason : ${error.message}\n`);
+          return;
+        }
+        console.log(`\r📦 ${dept} dependency installed for ${componentName}`);
+      })
+    }
+
+    // Shadcn installation
+    // npx shadcn@latest add ...
+    for (const shadcn in files[componentName]["shadcn"]) {
+      console.log(`\r📦 Installing ${shadcn} shadcn for ${componentName}`);
+      
+      const { exec } = require('child_process');
+
+      exec(`npx shadcn@latest add ${shadcn}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`\r❌ Error on installing ${shadcn} shadcn for ${componentName}, reason : ${error.message}\n`);
+          return;
+        }
+        console.log(`\r📦 ${shadcn} shadcn installed for ${componentName}`);
+      })
+    }
+
+    // Files installation
+    for (const [ClientFolderInstallation, listFiles] of Object.entries(files[componentName]["files"])) {
       if (typeof ClientFolderInstallation[1] === 'string') {
         const PwdClientFolderInstallation = path.resolve(process.cwd(), ClientFolderInstallation);
 
