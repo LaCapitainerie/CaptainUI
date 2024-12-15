@@ -67,30 +67,25 @@ const downloadComponent = async () => {
 
   console.log(`\r📦 Shipping components ${Components.join(', ')}\n`);
 
-
+  console.log();
 
   const NpmList = Components.map(componentName => files[componentName]["npm"] || []).flat();
   const ShadcnList = Components.map(componentName => files[componentName]["shadcn"] || []).flat();
 
-
-
   // Dependencies installation
   // npm i ...
-  if (installNpm) {
-    for (const dept of NpmList) {
-      console.log(`\r📦 Installing ${dept} dependency`);
-      if (isFactice) continue;
+  for (const dept of NpmList) {
 
-      const { exec } = require('child_process');
+    const { exec } = require('child_process');
 
-      exec(`npm i ${dept}`, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`\r❌ Error on installing ${dept} dependency`);
-          return;
-        }
-        console.log(`\r📦 ${dept} dependency installed`);
-      })
-    }
+    exec(`npm i ${dept}`, (error, stdout, stderr) => {
+      if (error) {
+        process.stdout.write(`❌ Error on installing ${dept} dependency`);
+        return;
+      }
+      process.stdout.write(`📦 ${dept} dependency installed`);
+    })
+
   }
 
   // Shadcn installation
