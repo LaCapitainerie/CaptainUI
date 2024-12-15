@@ -105,6 +105,10 @@ const downloadComponent = async () => {
         console.log(`\r📦 ${shadcn} shadcn installed`);
       })
     }
+  } else {
+    console.log(`📦 Shadcn installation skipped`)
+    console.log(`📦 To install shadcn dependencies, use the --shadcn flag`);
+    console.log(`📦 Or install it manually with : npx shadcn add ${ShadcnList.join(' ')}`);
   }
 
 
