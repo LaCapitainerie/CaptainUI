@@ -113,6 +113,7 @@ const downloadComponent = async () => {
     }
 
     // Files installation
+    // fetch ...
     for (const [ClientFolderInstallation, listFiles] of Object.entries(files[componentName]["files"])) {
       if (typeof ClientFolderInstallation[1] === 'string') {
         if(isFactice) continue;
@@ -124,7 +125,7 @@ const downloadComponent = async () => {
 
         for (const RepoFileURL of listFiles) {
 
-          const fetchUrl = `${GithubUrl}/${componentName}/${RepoFileURL}`;
+          const fetchUrl = `${GithubUrl}/${RepoFileURL}`;
           const ClientFinalDestination = path.join(PwdClientFolderInstallation, RepoFileURL);
           const dir = path.dirname(ClientFinalDestination);
 
