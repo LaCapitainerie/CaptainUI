@@ -54,6 +54,8 @@ const downloadComponent = async () => {
   // console.log({ secretFlag, secret });
   const Exemple = `npx @hugoant/captainui add data-table --secure=${secret}`;
   const isFactice = flags['factice'] || false;
+  const installNpm = flags['npm'] || false;
+  const installShadcn = flags['shadcn'] || false;
   
   // if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
@@ -80,36 +82,40 @@ const downloadComponent = async () => {
 
     // Dependencies installation
     // npm i ...
-    for (const dept of files[componentName]["npm"] || []) {
-      console.log(`\r📦 Installing ${dept} dependency for ${componentName}`);
-      if(isFactice) continue;
-    
-      const { exec } = require('child_process');
+    if(installNpm){
+      for (const dept of files[componentName]["npm"] || []) {
+        console.log(`\r📦 Installing ${dept} dependency for ${componentName}`);
+        if(isFactice) continue;
+      
+        const { exec } = require('child_process');
 
-      exec(`npm i ${dept}`, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`\r❌ Error on installing ${dept} dependency for ${componentName}, reason : ${error.message}\n`);
-          return;
-        }
-        console.log(`\r📦 ${dept} dependency installed for ${componentName}`);
-      })
+        exec(`npm i ${dept}`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`\r❌ Error on installing ${dept} dependency for ${componentName}, reason : ${error.message}\n`);
+            return;
+          }
+          console.log(`\r📦 ${dept} dependency installed for ${componentName}`);
+        })
+      }
     }
-
+    
     // Shadcn installation
     // npx shadcn@latest add ...
-    for (const shadcn of files[componentName]["shadcn"] || []) {
-      console.log(`\r📦 Installing ${shadcn} from shadcn for ${componentName}`);
-      if(isFactice) continue;
-      
-      const { exec } = require('child_process');
+    if(installShadcn){
+      for (const shadcn of files[componentName]["shadcn"] || []) {
+        console.log(`\r📦 Installing ${shadcn} from shadcn for ${componentName}`);
+        if(isFactice) continue;
+        
+        const { exec } = require('child_process');
 
-      exec(`npx shadcn add ${shadcn}`, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`\r❌ Error on installing ${shadcn} shadcn for ${componentName}, reason : ${error.message}\n`);
-          return;
-        }
-        console.log(`\r📦 ${shadcn} shadcn installed for ${componentName}`);
-      })
+        exec(`npx shadcn add ${shadcn}`, (error, stdout, stderr) => {
+          if (error) {
+            console.error(`\r❌ Error on installing ${shadcn} shadcn for ${componentName}, reason : ${error.message}\n`);
+            return;
+          }
+          console.log(`\r📦 ${shadcn} shadcn installed for ${componentName}`);
+        })
+      }
     }
 
     // Files installation

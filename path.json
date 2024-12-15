@@ -23,16 +23,16 @@
             "@radix-ui/react-dropdown-menu"
         ],
         "shadcn": [
-            "button",
             "badge",
+            "button",
             "command",
-            "popover",
-            "separator",
+            "dropdown-menu",
             "input",
             "label",
-            "sheet",
+            "popover",
             "select",
-            "dropdown-menu",
+            "separator",
+            "sheet",
             "table"
         ],
         "files": {
