@@ -56,7 +56,7 @@ const downloadComponent = async () => {
   const isFactice = flags['factice'] || false;
   const installNpm = flags['npm'] || false;
   const installShadcn = flags['shadcn'] || false;
-  
+
   // if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
   const files = await fetch('https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/path.json').then(res => res.json());
@@ -65,11 +65,54 @@ const downloadComponent = async () => {
 
   const Components = process.argv.slice(3).filter(arg => !arg.startsWith('-'));
 
-  console.log();
-  
-
   console.log(`\r📦 Shipping components ${Components.join(', ')}\n`);
-  
+
+
+
+  const NpmList = Components.map(componentName => files[componentName]["npm"] || []).flat();
+  const ShadcnList = Components.map(componentName => files[componentName]["shadcn"] || []).flat();
+
+
+
+  // Dependencies installation
+  // npm i ...
+  if (installNpm) {
+    for (const dept of NpmList) {
+      console.log(`\r📦 Installing ${dept} dependency`);
+      if (isFactice) continue;
+
+      const { exec } = require('child_process');
+
+      exec(`npm i ${dept}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`\r❌ Error on installing ${dept} dependency`);
+          return;
+        }
+        console.log(`\r📦 ${dept} dependency installed`);
+      })
+    }
+  }
+
+  // Shadcn installation
+  // npx shadcn@latest add ...
+  if (installShadcn) {
+    for (const shadcn of ShadcnList) {
+      console.log(`\r📦 Installing ${shadcn} from shadcn`);
+      if (isFactice) continue;
+
+      const { exec } = require('child_process');
+
+      exec(`npx shadcn add ${shadcn}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`\r❌ Error on installing ${shadcn} shadcn`);
+          return;
+        }
+        console.log(`\r📦 ${shadcn} shadcn installed`);
+      })
+    }
+  }
+
+
 
   for (const componentName of Components) {
 
@@ -80,49 +123,11 @@ const downloadComponent = async () => {
       return;
     }
 
-    // Dependencies installation
-    // npm i ...
-    if(installNpm){
-      for (const dept of files[componentName]["npm"] || []) {
-        console.log(`\r📦 Installing ${dept} dependency for ${componentName}`);
-        if(isFactice) continue;
-      
-        const { exec } = require('child_process');
-
-        exec(`npm i ${dept}`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`\r❌ Error on installing ${dept} dependency for ${componentName}, reason : ${error.message}\n`);
-            return;
-          }
-          console.log(`\r📦 ${dept} dependency installed for ${componentName}`);
-        })
-      }
-    }
-
-    // Shadcn installation
-    // npx shadcn@latest add ...
-    if(installShadcn){
-      for (const shadcn of files[componentName]["shadcn"] || []) {
-        console.log(`\r📦 Installing ${shadcn} from shadcn for ${componentName}`);
-        if(isFactice) continue;
-        
-        const { exec } = require('child_process');
-
-        exec(`npx shadcn add ${shadcn}`, (error, stdout, stderr) => {
-          if (error) {
-            console.error(`\r❌ Error on installing ${shadcn} shadcn for ${componentName}, reason : ${error.message}\n`);
-            return;
-          }
-          console.log(`\r📦 ${shadcn} shadcn installed for ${componentName}`);
-        })
-      }
-    }
-
     // Files installation
     // fetch ...
     for (const [ClientFolderInstallation, listFiles] of Object.entries(files[componentName]["files"])) {
       if (typeof ClientFolderInstallation[1] === 'string') {
-        if(isFactice) continue;
+        if (isFactice) continue;
         const PwdClientFolderInstallation = path.resolve(process.cwd(), ClientFolderInstallation);
 
         if (!fs.existsSync(PwdClientFolderInstallation)) {
