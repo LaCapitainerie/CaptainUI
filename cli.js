@@ -80,7 +80,7 @@ const downloadComponent = async () => {
 
     // Dependencies installation
     // npm i ...
-    for (const dept of files[componentName]["npm"]) {
+    for (const dept of files[componentName]["npm"] || []) {
       console.log(`\r📦 Installing ${dept} dependency for ${componentName}`);
       if(isFactice) continue;
     
@@ -97,7 +97,7 @@ const downloadComponent = async () => {
 
     // Shadcn installation
     // npx shadcn@latest add ...
-    for (const shadcn of files[componentName]["shadcn"]) {
+    for (const shadcn of files[componentName]["shadcn"] || []) {
       console.log(`\r📦 Installing ${shadcn} from shadcn for ${componentName}`);
       if(isFactice) continue;
       

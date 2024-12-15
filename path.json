@@ -16,6 +16,25 @@
         }
     },
     "data-table": {
+        "npm": [
+            "lucide-react",
+            "@tanstack/react-table",
+            "zod",
+            "@radix-ui/react-dropdown-menu"
+        ],
+        "shadcn": [
+            "button",
+            "badge",
+            "command",
+            "popover",
+            "separator",
+            "input",
+            "label",
+            "sheet",
+            "select",
+            "dropdown-menu",
+            "table"
+        ],
         "files": {
             "src/components/captainui/": [
                 "data-table/content/data-table-column-header.tsx",
@@ -32,6 +51,14 @@
         }
     },
     "data-table-rows": {
+        "npm": [
+            "date-fns",
+            "lucide-react",
+            "@tanstack/react-table"
+        ],
+        "shadcn": [
+            "badge"
+        ],
         "files": {
             "src/components/captainui/": [
                 "data-table/row-type/data-table-row-badge.tsx",
@@ -56,6 +83,5 @@
                 "payment/process/page.tsx"
             ]
         }
-    },
-    "auth": {}
+    }
 }
