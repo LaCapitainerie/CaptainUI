@@ -49,9 +49,11 @@ const downloadComponent = async () => {
       return args;
     }, {});
 
-  // const flags = getArgs();
+  const flags = getArgs();
   // const secretFlag = createHmac('sha256', flags['secret'] || '').digest('hex');
   // console.log({ secretFlag, secret });
+  const Exemple = `npx @hugoant/captainui add data-table --secure=${secret}`;
+  const isFactice = flags['factice'] || false;
   
   // if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
@@ -59,7 +61,13 @@ const downloadComponent = async () => {
 
   // npx @hugoant/captainui add data-table --secure=...
 
-  const Components = process.argv.slice(3, -1);
+  const Components = process.argv.slice(3);
+
+  console.log();
+  
+
+  console.log(`\r📦 Shipping components ${Components.join(', ')}\n`);
+  
 
   for (const componentName of Components) {
 
@@ -72,9 +80,10 @@ const downloadComponent = async () => {
 
     // Dependencies installation
     // npm i ...
-    for (const dept in files[componentName]["npm"]) {
+    for (const dept of files[componentName]["npm"]) {
       console.log(`\r📦 Installing ${dept} dependency for ${componentName}`);
-      
+      if(isFactice) continue;
+    
       const { exec } = require('child_process');
 
       exec(`npm i ${dept}`, (error, stdout, stderr) => {
@@ -88,8 +97,9 @@ const downloadComponent = async () => {
 
     // Shadcn installation
     // npx shadcn@latest add ...
-    for (const shadcn in files[componentName]["shadcn"]) {
-      console.log(`\r📦 Installing ${shadcn} shadcn for ${componentName}`);
+    for (const shadcn of files[componentName]["shadcn"]) {
+      console.log(`\r📦 Installing ${shadcn} from shadcn for ${componentName}`);
+      if(isFactice) continue;
       
       const { exec } = require('child_process');
 
@@ -105,6 +115,7 @@ const downloadComponent = async () => {
     // Files installation
     for (const [ClientFolderInstallation, listFiles] of Object.entries(files[componentName]["files"])) {
       if (typeof ClientFolderInstallation[1] === 'string') {
+        if(isFactice) continue;
         const PwdClientFolderInstallation = path.resolve(process.cwd(), ClientFolderInstallation);
 
         if (!fs.existsSync(PwdClientFolderInstallation)) {
@@ -112,13 +123,6 @@ const downloadComponent = async () => {
         }
 
         for (const RepoFileURL of listFiles) {
-
-          if(RepoFileURL.startwith("cli")){
-            // execute cli command
-
-            continue
-          }
-
 
           const fetchUrl = `${GithubUrl}/${componentName}/${RepoFileURL}`;
           const ClientFinalDestination = path.join(PwdClientFolderInstallation, RepoFileURL);

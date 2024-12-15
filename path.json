@@ -16,40 +16,46 @@
         }
     },
     "data-table": {
-        "src/components/captainui/": [
-            "data-table/content/data-table-column-header.tsx",
-            "data-table/content/data-table-faceted-filter.tsx",
-            "data-table/content/data-table-form.tsx",
-            "data-table/content/data-table-pagination.tsx",
-            "data-table/content/data-table-row-actions.tsx",
-            "data-table/content/data-table-skeleton.tsx",
-            "data-table/content/data-table-toolbar.tsx",
-            "data-table/content/data-table-view-options.tsx",
-            "data-table/content/data-table.tsx",
-            "utils.ts"
-        ]
+        "files": {
+            "src/components/captainui/": [
+                "data-table/content/data-table-column-header.tsx",
+                "data-table/content/data-table-faceted-filter.tsx",
+                "data-table/content/data-table-form.tsx",
+                "data-table/content/data-table-pagination.tsx",
+                "data-table/content/data-table-row-actions.tsx",
+                "data-table/content/data-table-skeleton.tsx",
+                "data-table/content/data-table-toolbar.tsx",
+                "data-table/content/data-table-view-options.tsx",
+                "data-table/content/data-table.tsx",
+                "utils.ts"
+            ]
+        }
     },
     "data-table-rows": {
-        "src/components/captainui/": [
-            "data-table/row-type/data-table-row-badge.tsx",
-            "data-table/row-type/data-table-row-boolean.tsx",
-            "data-table/row-type/data-table-row-currency.tsx",
-            "data-table/row-type/data-table-row-date.tsx",
-            "data-table/row-type/data-table-row-enum.tsx",
-            "data-table/row-type/data-table-row-image.tsx"
-        ]
+        "files": {
+            "src/components/captainui/": [
+                "data-table/row-type/data-table-row-badge.tsx",
+                "data-table/row-type/data-table-row-boolean.tsx",
+                "data-table/row-type/data-table-row-currency.tsx",
+                "data-table/row-type/data-table-row-date.tsx",
+                "data-table/row-type/data-table-row-enum.tsx",
+                "data-table/row-type/data-table-row-image.tsx"
+            ]
+        }
     },
     "stripe": {
-        "src/components/captainui/": [
-            "stripe/checkout-session.tsx",
-            "stripe/pay-button.tsx"
-        ],
-        "src/app/": [
-            "payment/page.tsx",
-            "payment/_components/failed.tsx",
-            "payment/_components/success.tsx",
-            "payment/process/page.tsx"
-        ]
+        "files": {
+            "src/components/captainui/": [
+                "stripe/checkout-session.tsx",
+                "stripe/pay-button.tsx"
+            ],
+            "src/app/": [
+                "payment/page.tsx",
+                "payment/_components/failed.tsx",
+                "payment/_components/success.tsx",
+                "payment/process/page.tsx"
+            ]
+        }
     },
     "auth": {}
 }
