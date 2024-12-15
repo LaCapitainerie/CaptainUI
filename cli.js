@@ -63,7 +63,7 @@ const downloadComponent = async () => {
 
   // npx @hugoant/captainui add data-table --secure=...
 
-  const Components = process.argv.slice(3);
+  const Components = process.argv.slice(3).filter(arg => !arg.startsWith('-'));
 
   console.log();
   
@@ -98,7 +98,7 @@ const downloadComponent = async () => {
         })
       }
     }
-    
+
     // Shadcn installation
     // npx shadcn@latest add ...
     if(installShadcn){
