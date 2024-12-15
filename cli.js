@@ -103,7 +103,7 @@ const downloadComponent = async () => {
       
       const { exec } = require('child_process');
 
-      exec(`npx shadcn@latest add ${shadcn}`, (error, stdout, stderr) => {
+      exec(`npx shadcn add ${shadcn}`, (error, stdout, stderr) => {
         if (error) {
           console.error(`\r❌ Error on installing ${shadcn} shadcn for ${componentName}, reason : ${error.message}\n`);
           return;
