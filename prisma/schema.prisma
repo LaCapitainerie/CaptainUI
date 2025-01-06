@@ -1,0 +1,73 @@
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://user:password@localhost:5432/db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./node_modules/@prisma/client"
+}
+
+model User {
+  id String @id @default(cuid())
+  name String?
+  email String @unique
+  emailVerified DateTime?
+  image String?
+  accounts Account[]
+  sessions Session[]
+  Authenticator Authenticator[]?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  username String @default(cuid())
+  userId String
+  type String
+  provider String @id
+  providerAccountId String @id
+  refresh_token String?
+  access_token String?
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String?
+  session_state String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  sessionToken String @unique
+  userId String
+  expires DateTime
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String @id
+  token String @id
+  expires DateTime
+}
+
+model Authenticator {
+  id String @id @default(cuid())
+  userId String
+  user User
+  type String
+  key String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  credentialID String @unique
+  providerAccountId String
+  credentialPublicKey String
+  counter Int
+  credentialDeviceType String
+  credentialBackedUp Boolean
+  transports String?
+}
+

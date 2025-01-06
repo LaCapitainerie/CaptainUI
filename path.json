@@ -91,28 +91,25 @@
                         {
                             "name": "id",
                             "type": "String",
-                            "id": true,
-                            "default": "cuid()"
+                            "attributes": ["@id", "@default(cuid())"]
                         },
                         {
                             "name": "name",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?",
+                            "attributes": ["@unique"]
                         },
                         {
                             "name": "email",
                             "type": "String",
-                            "unique": true
+                            "attributes": ["@unique"]
                         },
                         {
                             "name": "emailVerified",
-                            "type": "DateTime",
-                            "optional": true
+                            "type": "DateTime?"
                         },
                         {
                             "name": "image",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "accounts",
@@ -124,18 +121,17 @@
                         },
                         {
                             "name": "Authenticator",
-                            "type": "Authenticator[]",
-                            "optional": true
+                            "type": "Authenticator[]"
                         },
                         {
                             "name": "createdAt",
                             "type": "DateTime",
-                            "default": "now()"
+                            "attributes": ["@default(now())"]
                         },
                         {
                             "name": "updatedAt",
                             "type": "DateTime",
-                            "updatedAt": true
+                            "attributes": ["@updatedAt"]
                         }
                     ]
                 },
@@ -145,7 +141,7 @@
                         {
                             "name": "username",
                             "type": "String",
-                            "default": "cuid()"
+                            "attributes": ["@default(cuid())"]
                         },
                         {
                             "name": "userId",
@@ -157,73 +153,57 @@
                         },
                         {
                             "name": "provider",
-                            "type": "String",
-                            "id": true
+                            "type": "String"
                         },
                         {
                             "name": "providerAccountId",
-                            "type": "String",
-                            "id": true
+                            "type": "String"
                         },
                         {
                             "name": "refresh_token",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "access_token",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "expires_at",
-                            "type": "Int",
-                            "optional": true
+                            "type": "Int?"
                         },
                         {
                             "name": "token_type",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "scope",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "id_token",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "session_state",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
                         },
                         {
                             "name": "createdAt",
                             "type": "DateTime",
-                            "default": "now()"
+                            "attributes": ["@default(now())"]
                         },
                         {
                             "name": "updatedAt",
                             "type": "DateTime",
-                            "updatedAt": true
+                            "attributes": ["@updatedAt"]
                         },
                         {
                             "name": "user",
                             "type": "User",
-                            "relation": {
-                                "fields": [
-                                    "userId"
-                                ],
-                                "references": [
-                                    "id"
-                                ],
-                                "onDelete": "Cascade"
-                            }
+                            "attributes": ["@relation(fields: [userId], references: [id], onDelete: Cascade)"]
                         }
-                    ]
+                    ],
+                    "@@id": ["provider", "providerAccountId"]
                 },
                 {
                     "name": "Session",
@@ -231,7 +211,7 @@
                         {
                             "name": "sessionToken",
                             "type": "String",
-                            "unique": true
+                            "attributes": ["@unique"]
                         },
                         {
                             "name": "userId",
@@ -244,25 +224,17 @@
                         {
                             "name": "user",
                             "type": "User",
-                            "relation": {
-                                "fields": [
-                                    "userId"
-                                ],
-                                "references": [
-                                    "id"
-                                ],
-                                "onDelete": "Cascade"
-                            }
+                            "attributes": ["@relation(fields: [userId], references: [id], onDelete: Cascade)"]
                         },
                         {
                             "name": "createdAt",
                             "type": "DateTime",
-                            "default": "now()"
+                            "attributes": ["@default(now())"]
                         },
                         {
                             "name": "updatedAt",
                             "type": "DateTime",
-                            "updatedAt": true
+                            "attributes": ["@updatedAt"]
                         }
                     ]
                 },
@@ -272,58 +244,31 @@
                         {
                             "name": "identifier",
                             "type": "String",
-                            "id": true
+                            "attributes": ["@id"]
                         },
                         {
                             "name": "token",
                             "type": "String",
-                            "id": true
+                            "attributes": ["@unique"]
                         },
                         {
                             "name": "expires",
                             "type": "DateTime"
                         }
-                    ]
+                    ],
+                    "@@id": ["identifier", "token"]
                 },
                 {
                     "name": "Authenticator",
                     "fields": [
                         {
-                            "name": "id",
+                            "name": "credentialID",
                             "type": "String",
-                            "id": true,
-                            "default": "cuid()"
+                            "attributes": ["@unique"]
                         },
                         {
                             "name": "userId",
                             "type": "String"
-                        },
-                        {
-                            "name": "user",
-                            "type": "User"
-                        },
-                        {
-                            "name": "type",
-                            "type": "String"
-                        },
-                        {
-                            "name": "key",
-                            "type": "String"
-                        },
-                        {
-                            "name": "createdAt",
-                            "type": "DateTime",
-                            "default": "now()"
-                        },
-                        {
-                            "name": "updatedAt",
-                            "type": "DateTime",
-                            "updatedAt": true
-                        },
-                        {
-                            "name": "credentialID",
-                            "type": "String",
-                            "unique": true
                         },
                         {
                             "name": "providerAccountId",
@@ -347,10 +292,26 @@
                         },
                         {
                             "name": "transports",
-                            "type": "String",
-                            "optional": true
+                            "type": "String?"
+                        },
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "attributes": ["@relation(fields: [userId], references: [id], onDelete: Cascade)"]
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "attributes": ["@default(now())"]
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "attributes": ["@updatedAt"]
                         }
-                    ]
+                        
+                    ],
+                    "@@id": ["userId", "credentialID"]
                 }
             ]
         }
