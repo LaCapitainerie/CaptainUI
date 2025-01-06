@@ -70,17 +70,288 @@
             ]
         }
     },
-    "stripe": {
-        "files": {
-            "src/components/captainui/": [
-                "stripe/checkout-session.tsx",
-                "stripe/pay-button.tsx"
+    "auth": {
+        "prisma": {
+            "datasource": [
+                {
+                    "provider": "postgresql",
+                    "url": "postgresql://user:password@localhost:5432/db"
+                }
             ],
-            "src/app/": [
-                "payment/page.tsx",
-                "payment/_components/failed.tsx",
-                "payment/_components/success.tsx",
-                "payment/process/page.tsx"
+            "generator": [
+                {
+                    "provider": "prisma-client-js",
+                    "output": "./node_modules/@prisma/client"
+                }
+            ],
+            "model": [
+                {
+                    "name": "User",
+                    "fields": [
+                        {
+                            "name": "id",
+                            "type": "String",
+                            "id": true,
+                            "default": "cuid()"
+                        },
+                        {
+                            "name": "name",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "email",
+                            "type": "String",
+                            "unique": true
+                        },
+                        {
+                            "name": "emailVerified",
+                            "type": "DateTime",
+                            "optional": true
+                        },
+                        {
+                            "name": "image",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "accounts",
+                            "type": "Account[]"
+                        },
+                        {
+                            "name": "sessions",
+                            "type": "Session[]"
+                        },
+                        {
+                            "name": "Authenticator",
+                            "type": "Authenticator[]",
+                            "optional": true
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "default": "now()"
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "updatedAt": true
+                        }
+                    ]
+                },
+                {
+                    "name": "Account",
+                    "fields": [
+                        {
+                            "name": "username",
+                            "type": "String",
+                            "default": "cuid()"
+                        },
+                        {
+                            "name": "userId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "type",
+                            "type": "String"
+                        },
+                        {
+                            "name": "provider",
+                            "type": "String",
+                            "id": true
+                        },
+                        {
+                            "name": "providerAccountId",
+                            "type": "String",
+                            "id": true
+                        },
+                        {
+                            "name": "refresh_token",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "access_token",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "expires_at",
+                            "type": "Int",
+                            "optional": true
+                        },
+                        {
+                            "name": "token_type",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "scope",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "id_token",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "session_state",
+                            "type": "String",
+                            "optional": true
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "default": "now()"
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "updatedAt": true
+                        },
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "relation": {
+                                "fields": [
+                                    "userId"
+                                ],
+                                "references": [
+                                    "id"
+                                ],
+                                "onDelete": "Cascade"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "Session",
+                    "fields": [
+                        {
+                            "name": "sessionToken",
+                            "type": "String",
+                            "unique": true
+                        },
+                        {
+                            "name": "userId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "expires",
+                            "type": "DateTime"
+                        },
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "relation": {
+                                "fields": [
+                                    "userId"
+                                ],
+                                "references": [
+                                    "id"
+                                ],
+                                "onDelete": "Cascade"
+                            }
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "default": "now()"
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "updatedAt": true
+                        }
+                    ]
+                },
+                {
+                    "name": "VerificationToken",
+                    "fields": [
+                        {
+                            "name": "identifier",
+                            "type": "String",
+                            "id": true
+                        },
+                        {
+                            "name": "token",
+                            "type": "String",
+                            "id": true
+                        },
+                        {
+                            "name": "expires",
+                            "type": "DateTime"
+                        }
+                    ]
+                },
+                {
+                    "name": "Authenticator",
+                    "fields": [
+                        {
+                            "name": "id",
+                            "type": "String",
+                            "id": true,
+                            "default": "cuid()"
+                        },
+                        {
+                            "name": "userId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "user",
+                            "type": "User"
+                        },
+                        {
+                            "name": "type",
+                            "type": "String"
+                        },
+                        {
+                            "name": "key",
+                            "type": "String"
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "default": "now()"
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "updatedAt": true
+                        },
+                        {
+                            "name": "credentialID",
+                            "type": "String",
+                            "unique": true
+                        },
+                        {
+                            "name": "providerAccountId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "credentialPublicKey",
+                            "type": "String"
+                        },
+                        {
+                            "name": "counter",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "credentialDeviceType",
+                            "type": "String"
+                        },
+                        {
+                            "name": "credentialBackedUp",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "transports",
+                            "type": "String",
+                            "optional": true
+                        }
+                    ]
+                }
             ]
         }
     }

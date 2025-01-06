@@ -3,7 +3,8 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { createHmac } = require('crypto')
+const { createHmac } = require('crypto');
+const { updatePrismaSchema } = require('./prisma');
 
 const downloadFile = (url, dest) => {
   return new Promise((resolve, reject) => {
@@ -56,6 +57,7 @@ const downloadComponent = async () => {
   const isFactice = flags['factice'] || false;
   const installNpm = flags['npm'] || false;
   const installShadcn = flags['shadcn'] || false;
+  const installPrisma = flags['prisma'] || false;
 
   // if (secretFlag !== secret)return '⚔️ Unauthorized access';
 
@@ -66,12 +68,14 @@ const downloadComponent = async () => {
   const Components = process.argv.slice(3).filter(arg => !arg.startsWith('-'));
 
   console.log(`\r📦 Shipping components ${Components.join(', ')}\n`);
-
   console.log();
+
 
   const NpmList = Components.map(componentName => files[componentName]["npm"] || []).flat();
   const ShadcnList = Components.map(componentName => files[componentName]["shadcn"] || []).flat();
+  const PrismaList = Components.map(componentName => files[componentName]["prisma"] || []).flat();
 
+  
   // Dependencies installation
   // npm i ...
   for (const dept of NpmList) {
@@ -111,8 +115,12 @@ const downloadComponent = async () => {
     console.log(`📦 Or install it manually with : npx shadcn add ${ShadcnList.join(' ')}`);
   }
 
+  // Prisma installation
+  if (installPrisma) {
+    updatePrismaSchema('prisma/schema.prisma', PrismaList);
+  }
 
-
+  // Files installation
   for (const componentName of Components) {
 
     const GithubUrl = `https://raw.githubusercontent.com/LaCapitainerie/CaptainUI/refs/heads/main/components`;
