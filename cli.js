@@ -5,6 +5,7 @@ const path = require('path');
 const https = require('https');
 const { createHmac } = require('crypto')
 
+
 const downloadFile = (url, dest) => {
   return new Promise((resolve, reject) => {
     const file = fs.createWriteStream(dest);
@@ -71,6 +72,7 @@ const downloadComponent = async () => {
 
   const NpmList = Components.map(componentName => files[componentName]["npm"] || []).flat();
   const ShadcnList = Components.map(componentName => files[componentName]["shadcn"] || []).flat();
+  const PrismaTables = Components.map(componentName => files[componentName]["prisma"] || []).flat();
 
   // Dependencies installation
   // npm i ...
@@ -110,6 +112,32 @@ const downloadComponent = async () => {
     console.log(`📦 To install shadcn dependencies, use the --shadcn flag`);
     console.log(`📦 Or install it manually with : npx shadcn add ${ShadcnList.join(' ')}`);
   }
+
+  // Prisma update
+  if (PrismaTables) {
+    console.log(`\r📦 Updating prisma schema`)
+    if (isFactice) return;
+
+    const { formatAst, parsePrismaSchema } = require("@loancrate/prisma-schema-parser");
+
+    const schemaPath = path.resolve(process.cwd(), 'prisma', 'schema.prisma');
+
+    const schema = fs.readFileSync(schemaPath, 'utf-8');
+
+    const ast = parsePrismaSchema(schema);
+
+    for (const table of PrismaTables) {
+      const tableAst = parsePrismaSchema(table);
+      ast.definitions.push(tableAst.definitions[0]);
+    }
+
+    const formattedSchema = formatAst(ast);
+
+    fs.writeFileSync(schemaPath, formattedSchema);
+
+    console.log(`\r📦 Prisma schema updated`)
+
+  };
 
 
 
