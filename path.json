@@ -82,17 +82,249 @@
             ]
         }
     },
-    "stripe": {
-        "files": {
-            "src/components/captainui/": [
-                "stripe/checkout-session.tsx",
-                "stripe/pay-button.tsx"
+    "auth": {
+        "prisma": {
+            "datasource": [
+                {
+                    "provider": "postgresql",
+                    "url": "postgresql://user:password@localhost:5432/db"
+                }
             ],
-            "src/app/": [
-                "payment/page.tsx",
-                "payment/_components/failed.tsx",
-                "payment/_components/success.tsx",
-                "payment/process/page.tsx"
+            "generator": [
+                {
+                    "provider": "prisma-client-js",
+                    "output": "./node_modules/@prisma/client"
+                }
+            ],
+            "model": [
+                {
+                    "name": "User",
+                    "fields": [
+                        {
+                            "name": "id",
+                            "type": "String",
+                            "attributes": ["@id", "@default(cuid())"]
+                        },
+                        {
+                            "name": "name",
+                            "type": "String?",
+                            "attributes": ["@unique"]
+                        },
+                        {
+                            "name": "email",
+                            "type": "String",
+                            "attributes": ["@unique"]
+                        },
+                        {
+                            "name": "emailVerified",
+                            "type": "DateTime?"
+                        },
+                        {
+                            "name": "image",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "accounts",
+                            "type": "Account[]"
+                        },
+                        {
+                            "name": "sessions",
+                            "type": "Session[]"
+                        },
+                        {
+                            "name": "Authenticator",
+                            "type": "Authenticator[]"
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "attributes": ["@default(now())"]
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "attributes": ["@updatedAt"]
+                        }
+                    ]
+                },
+                {
+                    "name": "Account",
+                    "fields": [
+                        {
+                            "name": "username",
+                            "type": "String",
+                            "attributes": ["@default(cuid())"]
+                        },
+                        {
+                            "name": "userId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "type",
+                            "type": "String"
+                        },
+                        {
+                            "name": "provider",
+                            "type": "String"
+                        },
+                        {
+                            "name": "providerAccountId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "refresh_token",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "access_token",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "expires_at",
+                            "type": "Int?"
+                        },
+                        {
+                            "name": "token_type",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "scope",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "id_token",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "session_state",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "attributes": ["@default(now())"]
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "attributes": ["@updatedAt"]
+                        },
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "attributes": ["@relation(fields: [userId], references: [id], onDelete: Cascade)"]
+                        }
+                    ],
+                    "@@id": ["provider", "providerAccountId"]
+                },
+                {
+                    "name": "Session",
+                    "fields": [
+                        {
+                            "name": "sessionToken",
+                            "type": "String",
+                            "attributes": ["@unique"]
+                        },
+                        {
+                            "name": "userId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "expires",
+                            "type": "DateTime"
+                        },
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "attributes": ["@relation(fields: [userId], references: [id], onDelete: Cascade)"]
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "attributes": ["@default(now())"]
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "attributes": ["@updatedAt"]
+                        }
+                    ]
+                },
+                {
+                    "name": "VerificationToken",
+                    "fields": [
+                        {
+                            "name": "identifier",
+                            "type": "String",
+                            "attributes": ["@id"]
+                        },
+                        {
+                            "name": "token",
+                            "type": "String",
+                            "attributes": ["@unique"]
+                        },
+                        {
+                            "name": "expires",
+                            "type": "DateTime"
+                        }
+                    ],
+                    "@@id": ["identifier", "token"]
+                },
+                {
+                    "name": "Authenticator",
+                    "fields": [
+                        {
+                            "name": "credentialID",
+                            "type": "String",
+                            "attributes": ["@unique"]
+                        },
+                        {
+                            "name": "userId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "providerAccountId",
+                            "type": "String"
+                        },
+                        {
+                            "name": "credentialPublicKey",
+                            "type": "String"
+                        },
+                        {
+                            "name": "counter",
+                            "type": "Int"
+                        },
+                        {
+                            "name": "credentialDeviceType",
+                            "type": "String"
+                        },
+                        {
+                            "name": "credentialBackedUp",
+                            "type": "Boolean"
+                        },
+                        {
+                            "name": "transports",
+                            "type": "String?"
+                        },
+                        {
+                            "name": "user",
+                            "type": "User",
+                            "attributes": ["@relation(fields: [userId], references: [id], onDelete: Cascade)"]
+                        },
+                        {
+                            "name": "createdAt",
+                            "type": "DateTime",
+                            "attributes": ["@default(now())"]
+                        },
+                        {
+                            "name": "updatedAt",
+                            "type": "DateTime",
+                            "attributes": ["@updatedAt"]
+                        }
+                        
+                    ],
+                    "@@id": ["userId", "credentialID"]
+                }
             ]
         }
     }
