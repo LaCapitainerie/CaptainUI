@@ -267,6 +267,7 @@ const downloadComponent = async () => {
       }
     }
   }
+}
 
   return '⚓ Components downloaded successfully ⚔️';
 
